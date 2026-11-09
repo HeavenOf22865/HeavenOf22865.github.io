@@ -2,39 +2,102 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>* . . . find me . . . *</title>
+    <title>A:~</title>
     <style>
         body {
-            background-color: #000000;
-            color: #ffffff;
+            background-color: #0d0d0d;
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(20, 20, 25, 0.95)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" width="800" height="600" viewBox="0 0 800 600"><path d="M50 600 L120 400 L150 430 L200 350 L240 390 L300 300 L380 420 L450 320 L520 410 L600 280 L680 430 L750 330 L800 600 Z" fill="%23181c15"/><path d="M0 600 L80 450 L110 470 L170 390 L220 440 L280 340 L350 460 L410 370 L490 450 L570 310 L640 460 L710 380 L800 600 Z" fill="%230e120b"/></svg>');
+            background-size: cover;
+            background-position: center bottom;
+            color: #bcbcbc;
             font-family: "Courier New", Courier, monospace;
             margin: 0;
-            padding: 40px;
-            font-size: 18px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .dialog-box {
-            border: 4px solid #ffffff;
+        .window {
+            background-color: #1a1a1a;
+            border: 3px solid #7a2626;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            width: 100%;
+            max-width: 680px;
+            border-radius: 2px;
+        }
+
+        .title-bar {
+            background-color: #7a2626;
+            color: #ffffff;
+            padding: 3px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .title-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .title-icon {
+            border: 1px solid #ffffff;
+            padding: 0 4px;
+            font-size: 11px;
+            background: #000;
+            color: #7a2626;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 2px;
+        }
+
+        .control-btn {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            font-size: 11px;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .terminal-body {
             padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #000000;
+            min-height: 320px;
+            line-height: 1.5;
+            font-size: 15px;
         }
 
-        .title {
-            color: #ff0000;
-            margin-bottom: 25px;
+        .system-hint {
+            color: #a67c7c;
+            margin-bottom: 20px;
         }
 
-        .text-line {
+        .prompt-line {
+            color: #8c96ac;
             margin-bottom: 15px;
-            line-height: 1.4;
+        }
+
+        .dialog-text {
+            color: #dedede;
+            margin-bottom: 20px;
         }
 
         ul {
             list-style-type: none;
             padding-left: 0;
-            margin-top: 30px;
+            margin: 25px 0;
         }
 
         li {
@@ -42,7 +105,7 @@
         }
 
         a {
-            color: #ffffff;
+            color: #ff6666;
             text-decoration: none;
         }
 
@@ -51,43 +114,74 @@
         }
 
         a:hover {
-            color: #ffff00;
+            color: #ffff33;
         }
 
         a:hover:before {
             content: "♥ ";
-            color: #ff0000;
+            color: #ff3333;
         }
 
-        #system-log {
-            margin-top: 25px;
-            color: #ff0000;
-            min-height: 25px;
+        .cursor {
+            background-color: #bcbcbc;
+            animation: blink 1s infinite;
+            display: inline-block;
+            width: 10px;
+            height: 17px;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        #action-output {
+            margin-top: 20px;
+            color: #ff4d4d;
+            min-height: 20px;
         }
     </style>
 </head>
 <body>
 
-<div class="dialog-box">
-    <div class="title">* . . . find me. You promised. . . *</div>
+<div class="window">
+    <div class="title-bar">
+        <div class="title-left">
+            <div class="title-icon">A</div>
+            <span>~</span>
+        </div>
+        <div class="window-controls">
+            <div class="control-btn">_</div>
+            <div class="control-btn">❑</div>
+            <div class="control-btn">X</div>
+        </div>
+    </div>
     
-    <div class="text-line">dess1225@dess1225 ~></div>
-    <div class="text-line">Привет... Если ты видишь это окно, значит, ты зашел слишком далеко вглубь файлов.</div>
-    <div class="text-line">Здесь холодно, пахнет старой хвоей, а вокруг только заснеженные деревья и бесконечная ночь.</div>
-    <div class="text-line">Куда пропала гитара? Куда пропали все воспоминания?</div>
+    <div class="terminal-body">
+        <div class="system-hint">* * . . . find me. You promised. . . * *</div>
+        
+        <div class="prompt-line">dess1225@dess1225 ~></div>
+        
+        <div class="dialog-text">Привет... Кажется, ты все-таки смог открыть этот поток данных. Здесь очень тихо, сквозь ветки деревьев едва пробивается свет звезд, а под ногами скрипит холодный снег.</div>
+        <div class="dialog-text">Где моя старая гитара? Почему вокруг никого нет?</div>
 
-    <ul>
-        <li><a href="#logs" onclick="showLog('Запись: Сентябрь. Мы все еще искали её в лесу...')">Посмотреть логи системы</a></li>
-        <li><a href="#status" onclick="showLog('ОШИБКА: Объект Ноэль не отвечает. Связь потеряна.')">Проверить статус канала</a></li>
-        <li><a href="https://github.com" target="_blank">Сбежать обратно в реальность</a></li>
-    </ul>
+        <ul>
+            <li><a href="#logs" onclick="triggerLog('Лог заблокирован. Код ошибки: ICE-E')">Прочесть остатки системного лога</a></li>
+            <li><a href="#status" onclick="triggerLog('Канал связи с Ноэль оборван 12.25 секундами ранее.')">Отправить сигнал во внешний мир</a></li>
+            <li><a href="https://github.com" target="_blank">Закрыть окно терминала</a></li>
+        </ul>
 
-    <div id="system-log"></div>
+        <div id="action-output"></div>
+        
+        <div class="prompt-line" style="margin-top: 20px;">dess1225@dess1225 ~> <span class="cursor"></span></div>
+    </div>
 </div>
 
 <script>
-    function showLog(message) {
-        document.getElementById('system-log').innerText = "* " + message;
+    function triggerLog(msg) {
+        document.getElementById('action-output').innerText = ">> " + msg;
     }
 </script>
 
