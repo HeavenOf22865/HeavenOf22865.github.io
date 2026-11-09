@@ -5,138 +5,89 @@
     <title>* . . . find me . . . *</title>
     <style>
         body {
-            background-color: #1a0f0f;
-            color: #d1b3b3;
+            background-color: #000000;
+            color: #ffffff;
             font-family: "Courier New", Courier, monospace;
             margin: 0;
+            padding: 40px;
+            font-size: 18px;
+        }
+
+        .dialog-box {
+            border: 4px solid #ffffff;
             padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            background-image: radial-gradient(circle, #2d1414 10%, transparent 11%);
-            background-size: 12px 12px;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #000000;
         }
 
-        .terminal-window {
-            background-color: #221c1c;
-            border: 3px solid #802424;
-            box-shadow: 10px 10px 0px #000;
-            width: 100%;
-            max-width: 650px;
-            padding: 0;
+        .title {
+            color: #ff0000;
+            margin-bottom: 25px;
         }
 
-        .terminal-header {
-            background-color: #802424;
-            color: #fff;
-            padding: 5px 10px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
+        .text-line {
+            margin-bottom: 15px;
+            line-height: 1.4;
         }
 
-        .header-buttons span {
-            border: 1px solid #fff;
-            padding: 0px 5px;
-            margin-left: 3px;
-            background: #221c1c;
-            cursor: pointer;
-        }
-
-        .terminal-content {
-            padding: 20px;
-            min-height: 300px;
-            line-height: 1.6;
-        }
-
-        .system-msg {
-            color: #ff4d4d;
-            margin-bottom: 20px;
-            animation: blink 2s infinite;
-        }
-
-        .prompt {
-            color: #a3a3c2;
-        }
-
-        .cursor {
-            background-color: #d1b3b3;
-            color: #221c1c;
-            animation: blink 1s infinite;
-            padding: 0 4px;
-        }
-
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-
-        .weird-links {
+        ul {
+            list-style-type: none;
+            padding-left: 0;
             margin-top: 30px;
-            border-top: 1px dashed #802424;
-            padding-top: 15px;
+        }
+
+        li {
+            margin-bottom: 12px;
         }
 
         a {
-            color: #ff8080;
-            text-decoration: underline;
-        }
-        a:hover {
-            color: #fff;
-            background: #802424;
+            color: #ffffff;
+            text-decoration: none;
         }
 
-        .crt-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 4px, 6px 100%;
-            pointer-events: none;
+        a:before {
+            content: "* ";
+        }
+
+        a:hover {
+            color: #ffff00;
+        }
+
+        a:hover:before {
+            content: "♥ ";
+            color: #ff0000;
+        }
+
+        #system-log {
+            margin-top: 25px;
+            color: #ff0000;
+            min-height: 25px;
         }
     </style>
 </head>
 <body>
 
-<div class="crt-overlay"></div>
-
-<div class="terminal-window">
-    <div class="terminal-header">
-        <span>A:\dess1225\lost_signal.exe</span>
-        <div class="header-buttons">
-            <span>_</span><span></span><span>X</span>
-        </div>
-    </div>
+<div class="dialog-box">
+    <div class="title">* . . . find me. You promised. . . *</div>
     
-    <div class="terminal-content">
-        <div class="system-msg">* * . . . find me. You promised. . . * *</div>
-        
-        <p>dess1225@dess1225 ~></p>
-        <p>Привет... Если ты видишь это окно, значит, ты зашел слишком далеко вглубь файлов. Здесь холодно, пахнет старой хвоей, а вокруг только заснеженные деревья и бесконечная ночь.</p>
-        
-        <p>Куда пропала гитара? Куда пропали все воспоминания?</p>
+    <div class="text-line">dess1225@dess1225 ~></div>
+    <div class="text-line">Привет... Если ты видишь это окно, значит, ты зашел слишком далеко вглубь файлов.</div>
+    <div class="text-line">Здесь холодно, пахнет старой хвоей, а вокруг только заснеженные деревья и бесконечная ночь.</div>
+    <div class="text-line">Куда пропала гитара? Куда пропали все воспоминания?</div>
 
-        <div class="weird-links">
-            <p><strong>[ Навигация по пустоте ]</strong></p>
-            <ul>
-                <li><a href="#about" onclick="printLog('Запись: Сентябрь. Мы все еще искали её в лесу...')">Посмотреть логи системы</a></li>
-                <li><a href="#missing" onclick="printLog('ОШИБКА: Объект Ноэль не отвечает. Связь потеряна.')">Проверить статус канала</a></li>
-                <li><a href="https://github.com" target="_blank">Сбежать обратно в реальность</a></li>
-            </ul>
-        </div>
-        
-        <p id="console-output" style="color: #ff8080; font-style: italic; margin-top: 20px;"></p>
-        
-        <p class="prompt">dess1225@dess1225 ~> <span class="cursor">&nbsp;</span></p>
-    </div>
+    <ul>
+        <li><a href="#logs" onclick="showLog('Запись: Сентябрь. Мы все еще искали её в лесу...')">Посмотреть логи системы</a></li>
+        <li><a href="#status" onclick="showLog('ОШИБКА: Объект Ноэль не отвечает. Связь потеряна.')">Проверить статус канала</a></li>
+        <li><a href="https://github.com" target="_blank">Сбежать обратно в реальность</a></li>
+    </ul>
+
+    <div id="system-log"></div>
 </div>
 
 <script>
-    function printLog(text) {
-        document.getElementById('console-output').innerText = ">> " + text;
+    function showLog(message) {
+        document.getElementById('system-log').innerText = "* " + message;
     }
 </script>
 
