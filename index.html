@@ -5,8 +5,8 @@
     <title>* (It's her.)</title>
     <style>
         body {
-            background-color: #120b0b;
-            color: #d1b3b3;
+            background-color: #050202;
+            color: #bfa3a3;
             font-family: "Courier New", Courier, monospace;
             margin: 0;
             padding: 20px;
@@ -20,9 +20,9 @@
         }
 
         .terminal-window, .image-window {
-            background-color: #1a1515;
-            border: 2px solid #702525;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            background-color: #0a0707;
+            border: 2px solid #521a1a;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
             border-radius: 2px;
             position: absolute;
         }
@@ -34,14 +34,14 @@
         }
 
         .image-window {
-            width: 320px;
+            width: 340px;
             z-index: 20;
             display: none;
         }
 
         .terminal-header {
-            background-color: #702525;
-            color: #ffffff;
+            background-color: #521a1a;
+            color: #d9c5c5;
             padding: 6px 10px;
             font-size: 13px;
             font-weight: bold;
@@ -58,21 +58,22 @@
         }
 
         .header-icon {
-            border: 1px solid #ffffff;
+            border: 1px solid #521a1a;
             padding: 0 5px;
             font-size: 11px;
-            background: #1a1515;
-            color: #702525;
+            background: #0a0707;
+            color: #ff4d4d;
         }
 
         .header-buttons span {
-            border: 1px solid #ffffff;
+            border: 1px solid #521a1a;
             padding: 0px 5px;
             margin-left: 3px;
             font-size: 11px;
-            background: #1a1515;
+            background: #0a0707;
             cursor: pointer;
             display: inline-block;
+            color: #bfa3a3;
         }
 
         .terminal-content {
@@ -83,7 +84,7 @@
         }
 
         .prompt {
-            color: #8c96ac;
+            color: #69738a;
             margin: 0 0 16px 0;
         }
 
@@ -104,7 +105,7 @@
         }
 
         a {
-            color: #ff6666;
+            color: #cc4c4c;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -117,11 +118,11 @@
             content: "*";
             position: absolute;
             left: 0;
-            color: #ff6666;
+            color: #cc4c4c;
         }
 
         a:hover {
-            color: #ffff33;
+            color: #e6e630;
         }
 
         a:hover::before {
@@ -139,7 +140,7 @@
         .image-container {
             position: relative;
             width: 100%;
-            height: 240px;
+            height: 260px;
             background: #000;
             overflow: hidden;
         }
@@ -148,8 +149,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: contrast(1.2) brightness(0.9) saturate(0.8);
-            animation: vhs-glitch 4s infinite linear;
+            filter: contrast(1.3) brightness(0.85) saturate(0.75);
+            animation: vhs-glitch 3.5s infinite linear;
         }
 
         .image-container::after {
@@ -157,7 +158,7 @@
             display: block;
             position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
             z-index: 25;
             background-size: 100% 4px, 6px 100%;
             pointer-events: none;
@@ -165,14 +166,14 @@
 
         @keyframes vhs-glitch {
             0% { transform: translate(0, 0) skewX(0deg); filter: hue-rotate(0deg); }
-            10% { transform: translate(1px, -1px) skewX(0.5deg); }
-            11% { transform: translate(-1px, 1px) skewX(-1deg); filter: hue-rotate(90deg); }
+            10% { transform: translate(1px, -0.5px) skewX(0.3deg); }
+            11% { transform: translate(-1px, 0.5px) skewX(-0.8deg); filter: hue-rotate(60deg); }
             12% { transform: translate(0, 0) skewX(0deg); filter: hue-rotate(0deg); }
             49% { transform: translate(0, 0) skewX(0deg); }
-            50% { transform: translate(-0.5px, 0.5px) skewX(1deg); }
+            50% { transform: translate(-0.5px, 0.5px) skewX(0.5deg); }
             51% { transform: translate(0, 0) skewX(0deg); }
             90% { transform: translate(0, 0) skewX(0deg); }
-            91% { transform: translate(2px, -2px) skewX(-2deg); filter: saturate(2); }
+            91% { transform: translate(1.5px, -1.5px) skewX(-1.5deg); filter: saturate(1.8); }
             92% { transform: translate(0, 0) skewX(0deg); filter: hue-rotate(0deg); }
         }
     </style>
@@ -214,7 +215,7 @@
         </div>
     </div>
     <div class="image-container">
-        <img src="https://unsplash.com" alt="red woods" class="crt-image">
+        <img src="vhs3.png" alt="lost signal" class="crt-image">
     </div>
 </div>
 
@@ -226,8 +227,8 @@
 
     term.style.left = 'calc(50% - 320px)';
     term.style.top = 'calc(50% - 180px)';
-    imgWin.style.left = 'calc(50% - 160px)';
-    imgWin.style.top = 'calc(50% - 120px)';
+    imgWin.style.left = 'calc(50% - 170px)';
+    imgWin.style.top = 'calc(50% - 130px)';
 
     revealLink.addEventListener('click', (e) => {
         e.preventDefault();
