@@ -2,10 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>* . . . find me . . . *</title>
+    <title>A:\~</title>
     <style>
         body {
-            background-color: #0b0707;
+            background-color: #120b0b;
             color: #d1b3b3;
             font-family: "Courier New", Courier, monospace;
             margin: 0;
@@ -14,173 +14,157 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .crt-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            background: 
-                radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%),
-                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
-            background-size: 100% 100%, 100% 5px;
-            animation: crt-flicker 0.15s infinite;
-        }
-
-        .crt-screen::after {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 0%, rgba(255, 255, 255, 0.05) 10%, rgba(18, 16, 16, 0) 11%);
-            background-size: 100% 100%;
-            animation: scanline 8s linear infinite;
-        }
-
-        .lens-distortion {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            animation: lens-warp 1s ease-in-out forwards;
         }
 
         .terminal-window {
-            background-color: #221c1c;
-            border: 3px solid #802424;
-            box-shadow: 0 0 20px rgba(128, 36, 36, 0.3);
+            background-color: #1a1515;
+            border: 2px solid #702525;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             width: 100%;
-            max-width: 650px;
-            padding: 0;
-            position: relative;
+            max-width: 640px;
+            border-radius: 2px;
         }
 
         .terminal-header {
-            background-color: #802424;
-            color: #fff;
-            padding: 5px 10px;
+            background-color: #702525;
+            color: #ffffff;
+            padding: 4px 10px;
+            font-size: 13px;
             font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 14px;
+            user-select: none;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-icon {
+            border: 1px solid #ffffff;
+            padding: 0 4px;
+            font-size: 11px;
+            background: #1a1515;
+            color: #702525;
         }
 
         .header-buttons span {
-            border: 1px solid #fff;
-            padding: 0px 5px;
-            margin-left: 3px;
-            background: #221c1c;
+            border: 1px solid #ffffff;
+            padding: 0px 4px;
+            margin-left: 2px;
+            font-size: 11px;
+            background: #1a1515;
             cursor: pointer;
         }
 
         .terminal-content {
-            padding: 20px;
-            min-height: 300px;
+            padding: 24px;
+            min-height: 320px;
             line-height: 1.6;
+            font-size: 15px;
         }
 
         .system-msg {
             color: #ff4d4d;
-            margin-bottom: 20px;
-            text-shadow: 0 0 4px #ff4d4d;
+            margin-bottom: 24px;
         }
 
         .prompt {
-            color: #a3a3c2;
+            color: #8c96ac;
         }
 
         .cursor {
             background-color: #d1b3b3;
-            color: #221c1c;
             animation: blink 1s infinite;
-            padding: 0 4px;
+            display: inline-block;
+            width: 9px;
+            height: 16px;
+            vertical-align: middle;
+            margin-left: 2px;
         }
 
         .weird-links {
-            margin-top: 30px;
-            border-top: 1px dashed #802424;
-            padding-top: 15px;
+            margin-top: 32px;
+            border-top: 1px dashed #542020;
+            padding-top: 16px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 16px 0;
+        }
+
+        li {
+            margin-bottom: 12px;
         }
 
         a {
-            color: #ff8080;
-            text-decoration: underline;
-            text-shadow: 0 0 2px #ff8080;
+            color: #ff6666;
+            text-decoration: none;
         }
+
+        a:before {
+            content: "* ";
+        }
+
         a:hover {
-            color: #fff;
-            background: #802424;
-            text-shadow: none;
+            color: #ffff33;
+        }
+
+        a:hover:before {
+            content: "♥ ";
+            color: #ff3333;
         }
 
         #console-output {
             color: #ff8080;
             font-style: italic;
             margin-top: 20px;
-            min-height: 25px;
+            min-height: 24px;
         }
 
         @keyframes blink {
             0%, 49% { opacity: 1; }
             50%, 100% { opacity: 0; }
         }
-
-        @keyframes crt-flicker {
-            0% { opacity: 0.985; }
-            50% { opacity: 1; }
-            100% { opacity: 0.99; }
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(-100vh); }
-            100% { transform: translateY(100vh); }
-        }
-
-        @keyframes lens-warp {
-            0% { transform: scale(0.9) perspective(800px) rotateX(5deg); }
-            100% { transform: scale(1) perspective(800px) rotateX(0deg); }
-        }
     </style>
 </head>
 <body>
 
-<div class="crt-screen"></div>
+<div class="terminal-window">
+    <div class="terminal-header">
+        <div class="header-left">
+            <div class="header-icon">A</div>
+            <span>~</span>
+        </div>
+        <div class="header-buttons">
+            <span>_</span><span>❑</span><span>X</span>
+        </div>
+    </div>
+    
+    <div class="terminal-content">
+        <div class="system-msg">* * . . . find me. You promised. . . * *</div>
+        
+        <p class="prompt">dess1225@dess1225 ~></p>
+        <p>Привет... Если ты видишь это окно, значит, ты зашел слишком далеко вглубь файлов. Здесь холодно, пахнет старой хвоей, а вокруг только заснеженные деревья и бесконечная ночь.</p>
+        
+        <p>Куда пропала гитара? Куда пропали все воспоминания?</p>
 
-<div class="lens-distortion">
-    <div class="terminal-window">
-        <div class="terminal-header">
-            <span>A:\dess1225\lost_signal.exe</span>
-            <div class="header-buttons">
-                <span>_</span><span></span><span>X</span>
-            </div>
+        <div class="weird-links">
+            <ul>
+                <li><a href="#about" onclick="printLog('Запись: Сентябрь. Мы все еще искали её в лесу...')">Посмотреть логи системы</a></li>
+                <li><a href="#missing" onclick="printLog('ОШИБКА: Объект Ноэль не отвечает. Связь потеряна.')">Проверить статус канала</a></li>
+                <li><a href="https://github.com" target="_blank">Сбежать обратно в реальность</a></li>
+            </ul>
         </div>
         
-        <div class="terminal-content">
-            <div class="system-msg">* * . . . find me. You promised. . . * *</div>
-            
-            <p>dess1225@dess1225 ~></p>
-            <p>Привет... Если ты видишь это окно, значит, ты зашел слишком далеко вглубь файлов. Здесь холодно, пахнет старой хвоей, а вокруг только заснеженные деревья и бесконечная ночь.</p>
-            
-            <p>Куда пропала гитара? Куда пропали все воспоминания?</p>
-
-            <div class="weird-links">
-                <p><strong>[ Навигация по пустоте ]</strong></p>
-                <ul>
-                    <li><a href="#about" onclick="printLog('Запись: Сентябрь. Мы все еще искали её в лесу...')">Посмотреть логи системы</a></li>
-                    <li><a href="#missing" onclick="printLog('ОШИБКА: Объект Ноэль не отвечает. Связь потеряна.')">Проверить статус канала</a></li>
-                    <li><a href="https://github.com" target="_blank">Сбежать обратно в реальность</a></li>
-                </ul>
-            </div>
-            
-            <p id="console-output"></p>
-            
-            <p class="prompt">dess1225@dess1225 ~> <span class="cursor">&nbsp;</span></p>
-        </div>
+        <div id="console-output"></div>
+        
+        <p class="prompt" style="margin-top: 24px;">dess1225@dess1225 ~> <span class="cursor"></span></p>
     </div>
 </div>
 
