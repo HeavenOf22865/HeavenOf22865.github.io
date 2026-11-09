@@ -34,7 +34,7 @@
         }
 
         .image-window {
-            width: 340px;
+            width: 460px;
             z-index: 20;
             display: none;
         }
@@ -84,8 +84,9 @@
         }
 
         .prompt {
-            color: #69738a;
+            color: #8fa0c2;
             margin: 0 0 16px 0;
+            text-shadow: 0 0 2px rgba(143, 160, 194, 0.3);
         }
 
         .links {
@@ -140,8 +141,8 @@
         .image-container {
             position: relative;
             width: 100%;
-            height: 260px;
-            background: #000;
+            height: 340px;
+            background: #030101;
             overflow: hidden;
         }
 
@@ -149,8 +150,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: contrast(1.3) brightness(0.85) saturate(0.75);
-            animation: vhs-glitch 3.5s infinite linear;
+            filter: contrast(1.2) brightness(0.8) saturate(0.7);
+            animation: vhs-distortion 5s infinite linear;
         }
 
         .image-container::after {
@@ -158,23 +159,55 @@
             display: block;
             position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0) 95%,
+                rgba(0,0,0,0.4) 95%
+            );
+            background-size: 100% 6px;
             z-index: 25;
-            background-size: 100% 4px, 6px 100%;
             pointer-events: none;
         }
 
-        @keyframes vhs-glitch {
-            0% { transform: translate(0, 0) skewX(0deg); filter: hue-rotate(0deg); }
-            10% { transform: translate(1px, -0.5px) skewX(0.3deg); }
-            11% { transform: translate(-1px, 0.5px) skewX(-0.8deg); filter: hue-rotate(60deg); }
-            12% { transform: translate(0, 0) skewX(0deg); filter: hue-rotate(0deg); }
-            49% { transform: translate(0, 0) skewX(0deg); }
-            50% { transform: translate(-0.5px, 0.5px) skewX(0.5deg); }
-            51% { transform: translate(0, 0) skewX(0deg); }
-            90% { transform: translate(0, 0) skewX(0deg); }
-            91% { transform: translate(1.5px, -1.5px) skewX(-1.5deg); filter: saturate(1.8); }
-            92% { transform: translate(0, 0) skewX(0deg); filter: hue-rotate(0deg); }
+        .vhs-lines {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            z-index: 26;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .vhs-tracking {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent;
+            z-index: 27;
+            pointer-events: none;
+            animation: tracking-bar 8s infinite linear;
+        }
+
+        @keyframes tracking-bar {
+            0% { background: linear-gradient(transparent 0%, rgba(255,255,255,0.05) 10%, rgba(255,255,255,0.08) 13%, transparent 15%); transform: translateY(-100%); }
+            100% { background: linear-gradient(transparent 0%, rgba(255,255,255,0.05) 10%, rgba(255,255,255,0.08) 13%, transparent 15%); transform: translateY(100%); }
+        }
+
+        @keyframes vhs-distortion {
+            0% { transform: translate(0, 0) scale(1); filter: blur(0.3px); }
+            2% { transform: translate(-1px, 0.5px) scale(1.005) skewX(0.5deg); filter: blur(0.5px) hue-rotate(10deg); }
+            3% { transform: translate(1px, -0.5px) scale(1); filter: blur(0.3px); }
+            50% { transform: translate(0, 0) scale(1); }
+            51% { transform: translate(2px, 1px) skewX(-1deg); filter: saturate(1.5); }
+            52% { transform: translate(0, 0) scale(1); }
+            95% { transform: translate(0, 0) scale(1); }
+            96% { transform: translate(-2px, -1px) scale(1.01); filter: blur(0.8px); }
+            97% { transform: translate(0, 0) scale(1); }
         }
     </style>
 </head>
@@ -215,6 +248,8 @@
         </div>
     </div>
     <div class="image-container">
+        <div class="vhs-lines"></div>
+        <div class="vhs-tracking"></div>
         <img src="vhs3.png" alt="lost signal" class="crt-image">
     </div>
 </div>
@@ -227,8 +262,8 @@
 
     term.style.left = 'calc(50% - 320px)';
     term.style.top = 'calc(50% - 180px)';
-    imgWin.style.left = 'calc(50% - 170px)';
-    imgWin.style.top = 'calc(50% - 130px)';
+    imgWin.style.left = 'calc(50% - 230px)';
+    imgWin.style.top = 'calc(50% - 170px)';
 
     revealLink.addEventListener('click', (e) => {
         e.preventDefault();
