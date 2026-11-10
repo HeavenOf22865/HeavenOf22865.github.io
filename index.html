@@ -23,7 +23,6 @@
             user-select: none;
         }
 
-        /* ============ ОКНА ============ */
         .terminal-window, .image-window {
             background-color: #1a1515;
             border: 2px solid #312121;
@@ -164,14 +163,13 @@
             object-fit: cover;
         }
 
-        /* ============ КРАСНЫЙ НАПЛЫВ (DELTARUNE VIBE) ============ */
         #vignette {
             position: fixed;
             inset: 0;
             pointer-events: none;
             z-index: 5;
             opacity: 0;
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 30%, rgba(60, 0, 0, 0.6) 70%, rgba(20, 0, 0, 0.95) 100%);
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(60, 0, 0, 0.3) 75%, rgba(20, 0, 0, 0.7) 100%);
             transition: opacity 1.5s ease;
         }
 
@@ -182,10 +180,9 @@
 
         @keyframes deltarune-breathe {
             0% { filter: brightness(1); }
-            100% { filter: brightness(1.3); }
+            100% { filter: brightness(1.1); }
         }
 
-        /* ============ СЦЕНА С ВЫБОРОМ ============ */
         .reveal-stage {
             position: fixed;
             inset: 0;
@@ -207,7 +204,6 @@
             display: none;
         }
 
-        /* Обнуляем отступы для одиночной ссылки по центру */
         .reveal-stage .links {
             margin-top: 0;
         }
@@ -215,10 +211,8 @@
 </head>
 <body>
 
-<!-- Оверлей для красного наплыва -->
 <div id="vignette"></div>
 
-<!-- Главное терминальное окно -->
 <div class="terminal-window" id="termWindow">
     <div class="terminal-header drag-handle">
         <div class="header-left">
@@ -240,17 +234,14 @@
     </div>
 </div>
 
-<!-- Сцена "память" с кнопкой в виде ссылки -->
 <div class="reveal-stage" id="revealStage">
     <div class="links">
         <ul>
-            <!-- Класс active сразу задан, чтобы рядом была иконка души -->
             <li><a href="#" id="revealBtn" class="active">REVEAL MEMORY</a></li>
         </ul>
     </div>
 </div>
 
-<!-- Окно с постером -->
 <div class="image-window" id="imgWindow">
     <div class="terminal-header drag-handle">
         <div class="header-left">
@@ -258,7 +249,7 @@
             <span>*...I don’t remember who took the picture.</span>
         </div>
         <div class="header-buttons">
-            <span>_</span><span>❑</span><span id="closeImgBtn">X</span>
+            <span id="closeImgBtn">X</span>
         </div>
     </div>
     <div class="image-container">
@@ -266,7 +257,6 @@
     </div>
 </div>
 
-<!-- Музыка -->
 <audio id="bgm" src="mus_lost_memory.mp3" loop preload="auto"></audio>
 
 <script>
@@ -336,7 +326,6 @@
         requestAnimationFrame(() => revealBtn.focus());
     });
 
-    // Кнопка теперь работает как ссылка
     revealBtn.addEventListener('click', (e) => {
         e.preventDefault();
         document.body.classList.add('revealed');
