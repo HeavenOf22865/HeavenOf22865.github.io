@@ -5,7 +5,7 @@
     <title>* (It's her.)</title>
     <style>
         body {
-            background-image: linear-gradient(rgba(5, 2, 2, 0.45), rgba(5, 2, 2, 0.45)), url('forest.jpg');
+            background-image: linear-gradient(rgba(5, 2, 2, 0.75), rgba(5, 2, 2, 0.75)), url('forest.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -24,8 +24,8 @@
         }
 
         .terminal-window, .image-window {
-            background-color: #0a0707;
-            border: 2px solid #521a1a;
+            background-color: #1a1a1a;
+            border: 1px solid #3c3c3c;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
             border-radius: 2px;
             position: absolute;
@@ -38,21 +38,21 @@
         }
 
         .image-window {
-            width: 460px;
+            width: 480px;
             z-index: 20;
             display: none;
         }
 
         .terminal-header {
-            background-color: #521a1a;
-            color: #d9c5c5;
-            padding: 6px 10px;
-            font-size: 13px;
-            font-weight: bold;
+            background-color: #722f37;
+            color: #ffffff;
+            padding: 4px 8px;
+            font-size: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: move;
+            border-bottom: 1px solid #3c3c3c;
         }
 
         .header-left {
@@ -62,35 +62,35 @@
         }
 
         .header-icon {
-            border: 1px solid #521a1a;
-            padding: 0 5px;
-            font-size: 11px;
-            background: #0a0707;
-            color: #ff4d4d;
+            border: 1px solid #ffffff;
+            padding: 0 3px;
+            font-size: 10px;
+            background: #1a1a1a;
+            color: #722f37;
+            font-weight: bold;
         }
 
         .header-buttons span {
-            border: 1px solid #521a1a;
-            padding: 0px 5px;
-            margin-left: 3px;
-            font-size: 11px;
-            background: #0a0707;
+            border: 1px solid #ffffff;
+            padding: 0px 4px;
+            margin-left: 2px;
+            font-size: 10px;
+            background: #1a1a1a;
             cursor: pointer;
             display: inline-block;
-            color: #bfa3a3;
+            color: #ffffff;
         }
 
         .terminal-content {
-            padding: 24px;
+            padding: 16px;
             min-height: 280px;
-            line-height: 1.6;
-            font-size: 15px;
+            line-height: 1.5;
+            font-size: 14px;
         }
 
         .prompt {
-            color: #8fa0c2;
-            margin: 0 0 16px 0;
-            text-shadow: 0 0 2px rgba(143, 160, 194, 0.3);
+            color: #bfa3a3;
+            margin: 0 0 12px 0;
         }
 
         .links {
@@ -104,7 +104,7 @@
         }
 
         li {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
         }
@@ -115,8 +115,7 @@
             display: inline-flex;
             align-items: center;
             position: relative;
-            padding-left: 24px;
-            transition: color 0.1s ease;
+            padding-left: 20px;
         }
 
         a::before {
@@ -124,6 +123,8 @@
             position: absolute;
             left: 0;
             color: #cc4c4c;
+            width: 14px;
+            text-align: center;
         }
 
         a:hover {
@@ -134,8 +135,10 @@
             content: "";
             position: absolute;
             left: 0;
-            width: 16px;
-            height: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
             background-image: url('THE SOUL.png');
             background-size: contain;
             background-repeat: no-repeat;
@@ -146,7 +149,7 @@
             position: relative;
             width: 100%;
             height: 340px;
-            background: #030101;
+            background: #000000;
             overflow: hidden;
         }
 
@@ -154,23 +157,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: contrast(1.15) brightness(0.75) saturate(0.65) blur(1.2px);
-        }
-
-        .image-container::after {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.25),
-                rgba(0, 0, 0, 0.25) 1px,
-                transparent 1px,
-                transparent 3px
-            );
-            z-index: 25;
-            pointer-events: none;
         }
     </style>
 </head>
@@ -180,13 +166,13 @@
     <div class="terminal-header drag-handle">
         <div class="header-left">
             <div class="header-icon">A</div>
-            <span>dess1225@dess1225: ~</span>
+            <span>~</span>
         </div>
     </div>
     
     <div class="terminal-content">
-        <p class="prompt">dess1225@dess1225 ~> * I can hear that f*#%ing scratching again...</p>
-        <p class="prompt">dess1225@dess1225 ~> * If anyone is here, show yourselves!</p>
+        <p class="prompt">* The world is made in an adorable way.</p>
+        <p class="prompt">dess1225@dess1225 ~> </p>
 
         <div class="links">
             <ul>
@@ -204,7 +190,7 @@
             <span>*...I don’t remember who took the picture.</span>
         </div>
         <div class="header-buttons">
-            <span id="closeImgBtn">X</span>
+            <span>_</span><span>❑</span><span id="closeImgBtn">X</span>
         </div>
     </div>
     <div class="image-container">
