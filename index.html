@@ -116,6 +116,7 @@
             align-items: center;
             position: relative;
             padding-left: 24px;
+            outline: none;
         }
 
         a::before {
@@ -129,11 +130,11 @@
             line-height: 1;
         }
 
-        a:hover {
+        a.active {
             color: #ffff33;
         }
 
-        a:hover::before {
+        a.active::before {
             content: "";
             position: absolute;
             left: 0;
@@ -179,7 +180,7 @@
         <div class="links">
             <ul>
                 <li><a href="#" id="revealLink">Ask the strange voice to reveal itself.</a></li>
-                <li><a href="https://github.com">Unconnect</a></li>
+                <li><a href="https://github.com" id="unconnectLink">Unconnect</a></li>
             </ul>
         </div>
     </div>
@@ -204,12 +205,50 @@
     const term = document.getElementById('termWindow');
     const imgWin = document.getElementById('imgWindow');
     const revealLink = document.getElementById('revealLink');
+    const unconnectLink = document.getElementById('unconnectLink');
     const closeImgBtn = document.getElementById('closeImgBtn');
+    
+    const menuLinks = [revealLink, unconnectLink];
+    let currentIndex = 0;
 
     term.style.left = 'calc(50% - 320px)';
     term.style.top = 'calc(50% - 180px)';
     imgWin.style.left = 'calc(50% - 230px)';
     imgWin.style.top = 'calc(50% - 170px)';
+
+    function updateMenuSelection() {
+        menuLinks.forEach((link, index) => {
+            if (index === currentIndex) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    menuLinks.forEach((link, index) => {
+        link.addEventListener('mouseenter', () => {
+            currentIndex = index;
+            updateMenuSelection();
+        });
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+            e.preventDefault();
+            currentIndex = (currentIndex - 1 + menuLinks.length) % menuLinks.length;
+            updateMenuSelection();
+        } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+            e.preventDefault();
+            currentIndex = (currentIndex + 1) % menuLinks.length;
+            updateMenuSelection();
+        } else if (e.key === 'Enter' || e.key === 'z' || e.key === 'Z') {
+            e.preventDefault();
+            menuLinks[currentIndex].click();
+        }
+    });
+
+    updateMenuSelection();
 
     revealLink.addEventListener('click', (e) => {
         e.preventDefault();
