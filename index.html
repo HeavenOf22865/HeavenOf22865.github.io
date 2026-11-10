@@ -270,7 +270,9 @@
     const discardBtn = document.getElementById('discardBtn');
     const bgm = document.getElementById('bgm');
     
-    const menuLinks = [revealLink, unconnectLink];
+    const mainMenuLinks = [revealLink, unconnectLink];
+    const stageMenuLinks = [revealBtn, discardBtn];
+    let activeMenu = mainMenuLinks;
     let currentIndex = 0;
 
     term.style.left = 'calc(50% - 320px)';
@@ -279,8 +281,15 @@
     imgWin.style.top = 'calc(50% - 170px)';
 
     function updateMenuSelection() {
-        menuLinks.forEach((link, index) => {
-            if (index === currentIndex) {
+        mainMenuLinks.forEach((link, index) => {
+            if (activeMenu === mainMenuLinks && index === currentIndex) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+        stageMenuLinks.forEach((link, index) => {
+            if (activeMenu === stageMenuLinks && index === currentIndex) {
                 link.classList.add('active');
             } else {
                 link.classList.remove('active');
@@ -288,35 +297,41 @@
         });
     }
 
-    menuLinks.forEach((link, index) => {
+    mainMenuLinks.forEach((link, index) => {
         link.addEventListener('mouseenter', () => {
+            if (activeMenu !== mainMenuLinks) return;
+            currentIndex = index;
+            updateMenuSelection();
+        });
+    });
+
+    stageMenuLinks.forEach((link, index) => {
+        link.addEventListener('mouseenter', () => {
+            if (activeMenu !== stageMenuLinks) return;
             currentIndex = index;
             updateMenuSelection();
         });
     });
 
     window.addEventListener('keydown', (e) => {
-        if (document.body.classList.contains('memory-mode')) {
-            if (e.key === 'Escape' && imgWin.style.display === 'block') {
+        if (document.body.classList.contains('revealed')) {
+            if (e.key === 'Escape') {
                 closeImage();
-            } else if (e.key === 'Enter' && imgWin.style.display !== 'block') {
-                e.preventDefault();
-                revealBtn.click();
             }
             return;
         }
 
         if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
             e.preventDefault();
-            currentIndex = (currentIndex - 1 + menuLinks.length) % menuLinks.length;
+            currentIndex = (currentIndex - 1 + activeMenu.length) % activeMenu.length;
             updateMenuSelection();
         } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
             e.preventDefault();
-            currentIndex = (currentIndex + 1) % menuLinks.length;
+            currentIndex = (currentIndex + 1) % activeMenu.length;
             updateMenuSelection();
         } else if (e.key === 'Enter' || e.key === 'z' || e.key === 'Z') {
             e.preventDefault();
-            menuLinks[currentIndex].click();
+            activeMenu[currentIndex].click();
         }
     });
 
@@ -325,7 +340,9 @@
     revealLink.addEventListener('click', (e) => {
         e.preventDefault();
         document.body.classList.add('memory-mode');
-        requestAnimationFrame(() => revealBtn.focus());
+        activeMenu = stageMenuLinks;
+        currentIndex = 0;
+        updateMenuSelection();
     });
 
     revealBtn.addEventListener('click', (e) => {
@@ -345,15 +362,17 @@
         document.body.classList.remove('memory-mode');
         document.body.classList.remove('revealed');
         imgWin.style.display = 'none';
-        revealBtn.classList.add('active');
-        discardBtn.classList.remove('active');
+        activeMenu = mainMenuLinks;
+        currentIndex = 0;
         updateMenuSelection();
     });
 
     function closeImage() {
         imgWin.style.display = 'none';
         document.body.classList.remove('revealed');
-        revealBtn.focus();
+        activeMenu = stageMenuLinks;
+        currentIndex = 0;
+        updateMenuSelection();
     }
 
     closeImgBtn.addEventListener('click', closeImage);
