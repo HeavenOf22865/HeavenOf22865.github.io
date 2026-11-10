@@ -30,17 +30,16 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             border-radius: 2px;
             position: absolute;
+            z-index: 10;
         }
 
         .terminal-window {
             width: 100%;
             max-width: 640px;
-            z-index: 10;
         }
 
         .image-window {
             width: 480px;
-            z-index: 20;
             display: none;
         }
 
@@ -163,74 +162,30 @@
             object-fit: contain;
         }
 
-        /* ============ КРАСНОЕ МЕРЦАНИЕ ПО БОКАМ ============ */
-        .red-glow {
+        /* ============ ЭФФЕКТ DELTARUNE (Наплыв красного) ============ */
+        #vignette {
             position: fixed;
-            top: 0;
-            bottom: 0;
-            width: 26vw;
+            inset: 0;
             pointer-events: none;
             z-index: 5;
             opacity: 0;
+            /* Мягкий, глубокий красный по краям */
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 30%, rgba(60, 0, 0, 0.5) 70%, rgba(20, 0, 0, 0.9) 100%);
+            transition: opacity 1.5s ease;
         }
 
-        .red-glow.left {
-            left: 0;
-            background: radial-gradient(ellipse at left center,
-                        rgba(255, 20, 20, 0.75) 0%,
-                        rgba(180, 0, 0, 0.35) 35%,
-                        rgba(90, 0, 0, 0.10) 60%,
-                        transparent 80%);
+        body.memory-mode #vignette {
+            opacity: 1;
+            animation: deltarune-breathe 6s infinite alternate ease-in-out;
         }
 
-        .red-glow.right {
-            right: 0;
-            background: radial-gradient(ellipse at right center,
-                        rgba(255, 20, 20, 0.75) 0%,
-                        rgba(180, 0, 0, 0.35) 35%,
-                        rgba(90, 0, 0, 0.10) 60%,
-                        transparent 80%);
+        /* Медленное, зловещее "дыхание" тьмы */
+        @keyframes deltarune-breathe {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.4); }
         }
 
-        body.memory-mode .red-glow.left {
-            animation: flickerLeft 1.7s steps(24, end) infinite;
-        }
-
-        body.memory-mode .red-glow.right {
-            animation: flickerRight 2.3s steps(24, end) infinite;
-        }
-
-        @keyframes flickerLeft {
-            0%   { opacity: 0.35; }
-            8%   { opacity: 0.85; }
-            14%  { opacity: 0.20; }
-            23%  { opacity: 0.95; }
-            31%  { opacity: 0.40; }
-            42%  { opacity: 0.75; }
-            50%  { opacity: 0.15; }
-            58%  { opacity: 0.90; }
-            67%  { opacity: 0.30; }
-            76%  { opacity: 0.70; }
-            88%  { opacity: 0.18; }
-            100% { opacity: 0.35; }
-        }
-
-        @keyframes flickerRight {
-            0%   { opacity: 0.75; }
-            10%  { opacity: 0.20; }
-            18%  { opacity: 0.90; }
-            27%  { opacity: 0.35; }
-            36%  { opacity: 0.80; }
-            45%  { opacity: 0.15; }
-            54%  { opacity: 0.95; }
-            63%  { opacity: 0.30; }
-            72%  { opacity: 0.70; }
-            81%  { opacity: 0.22; }
-            92%  { opacity: 0.85; }
-            100% { opacity: 0.75; }
-        }
-
-        /* ============ СЦЕНА С КНОПКОЙ REVEAL MEMORY ============ */
+        /* ============ СЦЕНА С КНОПКОЙ ============ */
         .reveal-stage {
             position: fixed;
             inset: 0;
@@ -252,55 +207,31 @@
             display: none;
         }
 
+        /* Строгая кнопка в стиле терминала */
         .reveal-btn {
             font-family: "Courier New", Courier, monospace;
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 4px;
-            color: #ff5c5c;
-            background: rgba(18, 5, 5, 0.85);
-            border: 2px solid #702525;
-            padding: 18px 46px;
+            font-size: 16px;
+            color: #d1b3b3;
+            background: #1a1515;
+            border: 2px solid #312121;
+            padding: 12px 24px;
             cursor: pointer;
-            text-shadow: 0 0 10px rgba(255, 40, 40, 0.9),
-                         0 0 24px rgba(255, 0, 0, 0.5);
-            box-shadow: 0 0 22px rgba(255, 0, 0, 0.25),
-                        inset 0 0 22px rgba(255, 0, 0, 0.15);
-            animation: btnPulse 2.6s ease-in-out infinite;
-            transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             outline: none;
+            transition: color 0.2s, border-color 0.2s;
         }
 
-        .reveal-btn:hover,
-        .reveal-btn:focus {
-            color: #ffffff;
-            border-color: #ff4040;
-            transform: scale(1.05);
-            text-shadow: 0 0 12px rgba(255, 80, 80, 1),
-                         0 0 32px rgba(255, 0, 0, 0.8);
-        }
-
-        .reveal-btn:active {
-            transform: scale(0.98);
-        }
-
-        @keyframes btnPulse {
-            0%, 100% {
-                box-shadow: 0 0 18px rgba(255, 0, 0, 0.20),
-                            inset 0 0 18px rgba(255, 0, 0, 0.12);
-            }
-            50% {
-                box-shadow: 0 0 38px rgba(255, 0, 0, 0.45),
-                            inset 0 0 32px rgba(255, 0, 0, 0.25);
-            }
+        .reveal-btn:hover {
+            color: #ff6666;
+            border-color: #702525;
         }
     </style>
 </head>
 <body>
 
-<!-- Красное мерцание по бокам -->
-<div class="red-glow left"></div>
-<div class="red-glow right"></div>
+<!-- Оверлей для красного наплыва -->
+<div id="vignette"></div>
 
 <!-- Главное терминальное окно -->
 <div class="terminal-window" id="termWindow">
@@ -312,8 +243,8 @@
     </div>
 
     <div class="terminal-content">
-        <p class="prompt">dess1225@dess1225 ~&gt; * I can hear that f*#%ing scratching again...</p>
-        <p class="prompt">dess1225@dess1225 ~&gt; * If anyone is here, show yourselves!</p>
+        <p class="prompt">* ...find me. You promised.</p>
+        <p class="prompt">dess1225@dess1225 ~&gt; <span id="cursor">█</span></p>
 
         <div class="links">
             <ul>
@@ -324,12 +255,12 @@
     </div>
 </div>
 
-<!-- Сцена "память" с кнопкой -->
+<!-- Сцена "память" -->
 <div class="reveal-stage" id="revealStage">
     <button class="reveal-btn" id="revealBtn">REVEAL MEMORY</button>
 </div>
 
-<!-- Окно с missing_poster.png -->
+<!-- Окно с постером -->
 <div class="image-window" id="imgWindow">
     <div class="terminal-header drag-handle">
         <div class="header-left">
@@ -365,6 +296,12 @@
     imgWin.style.left = 'calc(50% - 230px)';
     imgWin.style.top = 'calc(50% - 170px)';
 
+    // Мигающий курсор (чисто для атмосферы)
+    const cursor = document.getElementById('cursor');
+    setInterval(() => {
+        cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+    }, 500);
+
     /* ---------- Навигация по меню ---------- */
     function updateMenuSelection() {
         menuLinks.forEach((link, index) => {
@@ -380,7 +317,6 @@
     });
 
     window.addEventListener('keydown', (e) => {
-        // В режиме памяти стрелки/Enter не должны дёргать скрытое меню
         if (document.body.classList.contains('memory-mode')) {
             if (e.key === 'Escape' && imgWin.style.display === 'block') {
                 closeImage();
@@ -408,7 +344,6 @@
     revealLink.addEventListener('click', (e) => {
         e.preventDefault();
         document.body.classList.add('memory-mode');
-        // даём отрисоваться и фокусируем кнопку для Enter
         requestAnimationFrame(() => revealBtn.focus());
     });
 
@@ -418,33 +353,13 @@
         imgWin.style.display = 'block';
         imgWin.style.zIndex = highestZIndex() + 1;
 
-        // музыка
         if (bgm.paused) {
-            bgm.volume = 0;
-            const playPromise = bgm.play();
-            if (playPromise !== undefined) {
-                playPromise.then(fadeInMusic).catch(() => {});
-            } else {
-                fadeInMusic();
-            }
+            bgm.volume = 0.6; // Сразу на нормальную громкость, без плавных затуханий
+            bgm.play().catch(() => {});
         }
     });
 
-    function fadeInMusic() {
-        const target = 0.7;
-        let vol = 0;
-        clearInterval(fadeInMusic._timer);
-        fadeInMusic._timer = setInterval(() => {
-            vol += 0.03;
-            if (vol >= target) {
-                vol = target;
-                clearInterval(fadeInMusic._timer);
-            }
-            bgm.volume = vol;
-        }, 90);
-    }
-
-    /* ---------- Закрытие окна с постером ---------- */
+    /* ---------- Закрытие окна ---------- */
     function closeImage() {
         imgWin.style.display = 'none';
         document.body.classList.remove('revealed');
