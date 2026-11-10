@@ -259,6 +259,7 @@
 </div>
 
 <audio id="bgm" src="mus_lost_memory.mp3" loop preload="auto"></audio>
+<audio id="sfxSelect" src="select.mp3" preload="auto"></audio>
 
 <script>
     const term = document.getElementById('termWindow');
@@ -269,6 +270,7 @@
     const revealBtn = document.getElementById('revealBtn');
     const discardBtn = document.getElementById('discardBtn');
     const bgm = document.getElementById('bgm');
+    const sfxSelect = document.getElementById('sfxSelect');
     
     const mainMenuLinks = [revealLink, unconnectLink];
     const stageMenuLinks = [revealBtn, discardBtn];
@@ -279,6 +281,11 @@
     term.style.top = 'calc(50% - 180px)';
     imgWin.style.left = 'calc(50% - 230px)';
     imgWin.style.top = 'calc(50% - 170px)';
+
+    function playSelectSound() {
+        sfxSelect.currentTime = 0;
+        sfxSelect.play().catch(() => {});
+    }
 
     function updateMenuSelection() {
         mainMenuLinks.forEach((link, index) => {
@@ -339,14 +346,18 @@
 
     revealLink.addEventListener('click', (e) => {
         e.preventDefault();
+        playSelectSound();
         document.body.classList.add('memory-mode');
         activeMenu = stageMenuLinks;
         currentIndex = 0;
         updateMenuSelection();
     });
 
+    unconnectLink.addEventListener('click', playSelectSound);
+
     revealBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        playSelectSound();
         document.body.classList.add('revealed');
         imgWin.style.display = 'block';
         imgWin.style.zIndex = highestZIndex() + 1;
@@ -363,6 +374,7 @@
 
     discardBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        playSelectSound();
         stopMusic();
         document.body.classList.remove('memory-mode');
         document.body.classList.remove('revealed');
@@ -373,6 +385,7 @@
     });
 
     function closeImage() {
+        playSelectSound();
         stopMusic();
         imgWin.style.display = 'none';
         document.body.classList.remove('revealed');
