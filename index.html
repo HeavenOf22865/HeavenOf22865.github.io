@@ -351,14 +351,19 @@
         imgWin.style.display = 'block';
         imgWin.style.zIndex = highestZIndex() + 1;
 
-        if (bgm.paused) {
-            bgm.volume = 0.6;
-            bgm.play().catch(() => {});
-        }
+        bgm.volume = 0.6;
+        bgm.currentTime = 0;
+        bgm.play().catch(error => console.log("Audio play failed:", error));
     });
+
+    function stopMusic() {
+        bgm.pause();
+        bgm.currentTime = 0;
+    }
 
     discardBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        stopMusic();
         document.body.classList.remove('memory-mode');
         document.body.classList.remove('revealed');
         imgWin.style.display = 'none';
@@ -368,6 +373,7 @@
     });
 
     function closeImage() {
+        stopMusic();
         imgWin.style.display = 'none';
         document.body.classList.remove('revealed');
         activeMenu = stageMenuLinks;
