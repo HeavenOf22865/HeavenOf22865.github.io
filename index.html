@@ -163,6 +163,15 @@
             object-fit: cover;
         }
 
+        .image-footer {
+            padding: 16px 24px;
+            border-top: 2px solid #312121;
+        }
+
+        .image-footer .links {
+            margin-top: 0;
+        }
+
         #vignette {
             position: fixed;
             inset: 0;
@@ -255,6 +264,13 @@
     <div class="image-container">
         <img src="vhs3.png" alt="lost signal" class="crt-image">
     </div>
+    <div class="image-footer">
+        <div class="links">
+            <ul>
+                <li><a href="#" id="discardBtn">Discard.</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <audio id="bgm" src="mus_lost_memory.mp3" loop preload="auto"></audio>
@@ -266,6 +282,7 @@
     const unconnectLink = document.getElementById('unconnectLink');
     const closeImgBtn = document.getElementById('closeImgBtn');
     const revealBtn = document.getElementById('revealBtn');
+    const discardBtn = document.getElementById('discardBtn');
     const bgm = document.getElementById('bgm');
     
     const menuLinks = [revealLink, unconnectLink];
@@ -345,6 +362,10 @@
     }
 
     closeImgBtn.addEventListener('click', closeImage);
+    discardBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeImage();
+    });
 
     function highestZIndex() {
         return Math.max(
