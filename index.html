@@ -30,16 +30,17 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             border-radius: 2px;
             position: absolute;
-            z-index: 10;
         }
 
         .terminal-window {
             width: 100%;
             max-width: 640px;
+            z-index: 10;
         }
 
         .image-window {
             width: 480px;
+            z-index: 20;
             display: none;
         }
 
@@ -117,6 +118,7 @@
             position: relative;
             padding-left: 24px;
             outline: none;
+            cursor: pointer;
         }
 
         a::before {
@@ -159,18 +161,17 @@
         .crt-image {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
         }
 
-        /* ============ ЭФФЕКТ DELTARUNE (Наплыв красного) ============ */
+        /* ============ КРАСНЫЙ НАПЛЫВ (DELTARUNE VIBE) ============ */
         #vignette {
             position: fixed;
             inset: 0;
             pointer-events: none;
             z-index: 5;
             opacity: 0;
-            /* Мягкий, глубокий красный по краям */
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 30%, rgba(60, 0, 0, 0.5) 70%, rgba(20, 0, 0, 0.9) 100%);
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 30%, rgba(60, 0, 0, 0.6) 70%, rgba(20, 0, 0, 0.95) 100%);
             transition: opacity 1.5s ease;
         }
 
@@ -179,13 +180,12 @@
             animation: deltarune-breathe 6s infinite alternate ease-in-out;
         }
 
-        /* Медленное, зловещее "дыхание" тьмы */
         @keyframes deltarune-breathe {
             0% { filter: brightness(1); }
-            100% { filter: brightness(1.4); }
+            100% { filter: brightness(1.3); }
         }
 
-        /* ============ СЦЕНА С КНОПКОЙ ============ */
+        /* ============ СЦЕНА С ВЫБОРОМ ============ */
         .reveal-stage {
             position: fixed;
             inset: 0;
@@ -207,24 +207,9 @@
             display: none;
         }
 
-        /* Строгая кнопка в стиле терминала */
-        .reveal-btn {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 16px;
-            color: #d1b3b3;
-            background: #1a1515;
-            border: 2px solid #312121;
-            padding: 12px 24px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            outline: none;
-            transition: color 0.2s, border-color 0.2s;
-        }
-
-        .reveal-btn:hover {
-            color: #ff6666;
-            border-color: #702525;
+        /* Обнуляем отступы для одиночной ссылки по центру */
+        .reveal-stage .links {
+            margin-top: 0;
         }
     </style>
 </head>
@@ -241,10 +226,10 @@
             <span>~</span>
         </div>
     </div>
-
+    
     <div class="terminal-content">
-        <p class="prompt">* ...find me. You promised.</p>
-        <p class="prompt">dess1225@dess1225 ~&gt; <span id="cursor">█</span></p>
+        <p class="prompt">dess1225@dess1225 ~> * I can hear that f*#%ing scratching again...</p>
+        <p class="prompt">dess1225@dess1225 ~> * If anyone is here, show yourselves!</p>
 
         <div class="links">
             <ul>
@@ -255,9 +240,14 @@
     </div>
 </div>
 
-<!-- Сцена "память" -->
+<!-- Сцена "память" с кнопкой в виде ссылки -->
 <div class="reveal-stage" id="revealStage">
-    <button class="reveal-btn" id="revealBtn">REVEAL MEMORY</button>
+    <div class="links">
+        <ul>
+            <!-- Класс active сразу задан, чтобы рядом была иконка души -->
+            <li><a href="#" id="revealBtn" class="active">REVEAL MEMORY</a></li>
+        </ul>
+    </div>
 </div>
 
 <!-- Окно с постером -->
@@ -287,7 +277,7 @@
     const closeImgBtn = document.getElementById('closeImgBtn');
     const revealBtn = document.getElementById('revealBtn');
     const bgm = document.getElementById('bgm');
-
+    
     const menuLinks = [revealLink, unconnectLink];
     let currentIndex = 0;
 
@@ -296,16 +286,13 @@
     imgWin.style.left = 'calc(50% - 230px)';
     imgWin.style.top = 'calc(50% - 170px)';
 
-    // Мигающий курсор (чисто для атмосферы)
-    const cursor = document.getElementById('cursor');
-    setInterval(() => {
-        cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
-    }, 500);
-
-    /* ---------- Навигация по меню ---------- */
     function updateMenuSelection() {
         menuLinks.forEach((link, index) => {
-            link.classList.toggle('active', index === currentIndex);
+            if (index === currentIndex) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
         });
     }
 
@@ -320,6 +307,9 @@
         if (document.body.classList.contains('memory-mode')) {
             if (e.key === 'Escape' && imgWin.style.display === 'block') {
                 closeImage();
+            } else if (e.key === 'Enter' && imgWin.style.display !== 'block') {
+                e.preventDefault();
+                revealBtn.click();
             }
             return;
         }
@@ -340,26 +330,25 @@
 
     updateMenuSelection();
 
-    /* ---------- Переход в "память" ---------- */
     revealLink.addEventListener('click', (e) => {
         e.preventDefault();
         document.body.classList.add('memory-mode');
         requestAnimationFrame(() => revealBtn.focus());
     });
 
-    /* ---------- Кнопка REVEAL MEMORY ---------- */
-    revealBtn.addEventListener('click', () => {
+    // Кнопка теперь работает как ссылка
+    revealBtn.addEventListener('click', (e) => {
+        e.preventDefault();
         document.body.classList.add('revealed');
         imgWin.style.display = 'block';
         imgWin.style.zIndex = highestZIndex() + 1;
 
         if (bgm.paused) {
-            bgm.volume = 0.6; // Сразу на нормальную громкость, без плавных затуханий
+            bgm.volume = 0.6;
             bgm.play().catch(() => {});
         }
     });
 
-    /* ---------- Закрытие окна ---------- */
     function closeImage() {
         imgWin.style.display = 'none';
         document.body.classList.remove('revealed');
@@ -368,7 +357,6 @@
 
     closeImgBtn.addEventListener('click', closeImage);
 
-    /* ---------- Z-index и перетаскивание ---------- */
     function highestZIndex() {
         return Math.max(
             ...Array.from(document.querySelectorAll('.terminal-window, .image-window'))
