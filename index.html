@@ -5,12 +5,12 @@
     <title>* (It's her.)</title>
     <style>
         body {
-            background-image: linear-gradient(rgba(5, 2, 2, 0.75), rgba(5, 2, 2, 0.75)), url('forest.jpg');
+            background-image: linear-gradient(rgba(5, 2, 2, 0.8), rgba(5, 2, 2, 0.8)), url('forest.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-color: #050202;
-            color: #bfa3a3;
+            color: #d1b3b3;
             font-family: "Courier New", Courier, monospace;
             margin: 0;
             padding: 20px;
@@ -24,9 +24,9 @@
         }
 
         .terminal-window, .image-window {
-            background-color: #1a1a1a;
-            border: 1px solid #3c3c3c;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+            background-color: #1a1515;
+            border: 2px solid #312121;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             border-radius: 2px;
             position: absolute;
         }
@@ -44,15 +44,16 @@
         }
 
         .terminal-header {
-            background-color: #722f37;
+            background-color: #702525;
             color: #ffffff;
-            padding: 4px 8px;
-            font-size: 12px;
+            padding: 4px 10px;
+            font-size: 13px;
+            font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: move;
-            border-bottom: 1px solid #3c3c3c;
+            user-select: none;
         }
 
         .header-left {
@@ -63,44 +64,43 @@
 
         .header-icon {
             border: 1px solid #ffffff;
-            padding: 0 3px;
-            font-size: 10px;
-            background: #1a1a1a;
-            color: #722f37;
-            font-weight: bold;
+            padding: 0 4px;
+            font-size: 11px;
+            background: #1a1515;
+            color: #702525;
         }
 
         .header-buttons span {
             border: 1px solid #ffffff;
             padding: 0px 4px;
             margin-left: 2px;
-            font-size: 10px;
-            background: #1a1a1a;
+            font-size: 11px;
+            background: #1a1515;
             cursor: pointer;
             display: inline-block;
             color: #ffffff;
         }
 
         .terminal-content {
-            padding: 16px;
+            padding: 24px;
             min-height: 280px;
-            line-height: 1.5;
-            font-size: 14px;
+            line-height: 1.6;
+            font-size: 15px;
         }
 
         .prompt {
-            color: #bfa3a3;
-            margin: 0 0 12px 0;
+            color: #8c96ac;
+            margin: 0 0 16px 0;
         }
 
         .links {
-            margin-top: 24px;
+            margin-top: 32px;
         }
 
         ul {
             list-style-type: none;
             padding-left: 0;
-            margin: 0;
+            margin: 16px 0;
         }
 
         li {
@@ -110,25 +110,27 @@
         }
 
         a {
-            color: #cc4c4c;
+            color: #ff6666;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             position: relative;
-            padding-left: 20px;
+            padding-left: 24px;
         }
 
         a::before {
             content: "*";
             position: absolute;
             left: 0;
-            color: #cc4c4c;
-            width: 14px;
+            color: #ff6666;
+            width: 16px;
             text-align: center;
+            font-size: 15px;
+            line-height: 1;
         }
 
         a:hover {
-            color: #e6e630;
+            color: #ffff33;
         }
 
         a:hover::before {
@@ -137,8 +139,8 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             background-image: url('THE SOUL.png');
             background-size: contain;
             background-repeat: no-repeat;
@@ -171,8 +173,8 @@
     </div>
     
     <div class="terminal-content">
-        <p class="prompt">* The world is made in an adorable way.</p>
-        <p class="prompt">dess1225@dess1225 ~> </p>
+        <p class="prompt">dess1225@dess1225 ~> * I can hear that f*#%ing scratching again...</p>
+        <p class="prompt">dess1225@dess1225 ~> * If anyone is here, show yourselves!</p>
 
         <div class="links">
             <ul>
