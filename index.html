@@ -23,6 +23,7 @@
             user-select: none;
         }
 
+        /* ============ ОКНА ============ */
         .terminal-window, .image-window {
             background-color: #1a1515;
             border: 2px solid #312121;
@@ -159,12 +160,149 @@
         .crt-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+        }
+
+        /* ============ КРАСНОЕ МЕРЦАНИЕ ПО БОКАМ ============ */
+        .red-glow {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 26vw;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+        }
+
+        .red-glow.left {
+            left: 0;
+            background: radial-gradient(ellipse at left center,
+                        rgba(255, 20, 20, 0.75) 0%,
+                        rgba(180, 0, 0, 0.35) 35%,
+                        rgba(90, 0, 0, 0.10) 60%,
+                        transparent 80%);
+        }
+
+        .red-glow.right {
+            right: 0;
+            background: radial-gradient(ellipse at right center,
+                        rgba(255, 20, 20, 0.75) 0%,
+                        rgba(180, 0, 0, 0.35) 35%,
+                        rgba(90, 0, 0, 0.10) 60%,
+                        transparent 80%);
+        }
+
+        body.memory-mode .red-glow.left {
+            animation: flickerLeft 1.7s steps(24, end) infinite;
+        }
+
+        body.memory-mode .red-glow.right {
+            animation: flickerRight 2.3s steps(24, end) infinite;
+        }
+
+        @keyframes flickerLeft {
+            0%   { opacity: 0.35; }
+            8%   { opacity: 0.85; }
+            14%  { opacity: 0.20; }
+            23%  { opacity: 0.95; }
+            31%  { opacity: 0.40; }
+            42%  { opacity: 0.75; }
+            50%  { opacity: 0.15; }
+            58%  { opacity: 0.90; }
+            67%  { opacity: 0.30; }
+            76%  { opacity: 0.70; }
+            88%  { opacity: 0.18; }
+            100% { opacity: 0.35; }
+        }
+
+        @keyframes flickerRight {
+            0%   { opacity: 0.75; }
+            10%  { opacity: 0.20; }
+            18%  { opacity: 0.90; }
+            27%  { opacity: 0.35; }
+            36%  { opacity: 0.80; }
+            45%  { opacity: 0.15; }
+            54%  { opacity: 0.95; }
+            63%  { opacity: 0.30; }
+            72%  { opacity: 0.70; }
+            81%  { opacity: 0.22; }
+            92%  { opacity: 0.85; }
+            100% { opacity: 0.75; }
+        }
+
+        /* ============ СЦЕНА С КНОПКОЙ REVEAL MEMORY ============ */
+        .reveal-stage {
+            position: fixed;
+            inset: 0;
+            z-index: 8;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body.memory-mode .reveal-stage {
+            display: flex;
+        }
+
+        body.memory-mode .terminal-window {
+            display: none;
+        }
+
+        body.revealed .reveal-stage {
+            display: none;
+        }
+
+        .reveal-btn {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #ff5c5c;
+            background: rgba(18, 5, 5, 0.85);
+            border: 2px solid #702525;
+            padding: 18px 46px;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(255, 40, 40, 0.9),
+                         0 0 24px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 22px rgba(255, 0, 0, 0.25),
+                        inset 0 0 22px rgba(255, 0, 0, 0.15);
+            animation: btnPulse 2.6s ease-in-out infinite;
+            transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+            outline: none;
+        }
+
+        .reveal-btn:hover,
+        .reveal-btn:focus {
+            color: #ffffff;
+            border-color: #ff4040;
+            transform: scale(1.05);
+            text-shadow: 0 0 12px rgba(255, 80, 80, 1),
+                         0 0 32px rgba(255, 0, 0, 0.8);
+        }
+
+        .reveal-btn:active {
+            transform: scale(0.98);
+        }
+
+        @keyframes btnPulse {
+            0%, 100% {
+                box-shadow: 0 0 18px rgba(255, 0, 0, 0.20),
+                            inset 0 0 18px rgba(255, 0, 0, 0.12);
+            }
+            50% {
+                box-shadow: 0 0 38px rgba(255, 0, 0, 0.45),
+                            inset 0 0 32px rgba(255, 0, 0, 0.25);
+            }
         }
     </style>
 </head>
 <body>
 
+<!-- Красное мерцание по бокам -->
+<div class="red-glow left"></div>
+<div class="red-glow right"></div>
+
+<!-- Главное терминальное окно -->
 <div class="terminal-window" id="termWindow">
     <div class="terminal-header drag-handle">
         <div class="header-left">
@@ -172,10 +310,10 @@
             <span>~</span>
         </div>
     </div>
-    
+
     <div class="terminal-content">
-        <p class="prompt">dess1225@dess1225 ~> * I can hear that f*#%ing scratching again...</p>
-        <p class="prompt">dess1225@dess1225 ~> * If anyone is here, show yourselves!</p>
+        <p class="prompt">dess1225@dess1225 ~&gt; * I can hear that f*#%ing scratching again...</p>
+        <p class="prompt">dess1225@dess1225 ~&gt; * If anyone is here, show yourselves!</p>
 
         <div class="links">
             <ul>
@@ -186,6 +324,12 @@
     </div>
 </div>
 
+<!-- Сцена "память" с кнопкой -->
+<div class="reveal-stage" id="revealStage">
+    <button class="reveal-btn" id="revealBtn">REVEAL MEMORY</button>
+</div>
+
+<!-- Окно с missing_poster.png -->
 <div class="image-window" id="imgWindow">
     <div class="terminal-header drag-handle">
         <div class="header-left">
@@ -197,9 +341,12 @@
         </div>
     </div>
     <div class="image-container">
-        <img src="vhs3.png" alt="lost signal" class="crt-image">
+        <img src="missing_poster.png" alt="missing poster" class="crt-image">
     </div>
 </div>
+
+<!-- Музыка -->
+<audio id="bgm" src="mus_lost_memory.mp3" loop preload="auto"></audio>
 
 <script>
     const term = document.getElementById('termWindow');
@@ -207,7 +354,9 @@
     const revealLink = document.getElementById('revealLink');
     const unconnectLink = document.getElementById('unconnectLink');
     const closeImgBtn = document.getElementById('closeImgBtn');
-    
+    const revealBtn = document.getElementById('revealBtn');
+    const bgm = document.getElementById('bgm');
+
     const menuLinks = [revealLink, unconnectLink];
     let currentIndex = 0;
 
@@ -216,13 +365,10 @@
     imgWin.style.left = 'calc(50% - 230px)';
     imgWin.style.top = 'calc(50% - 170px)';
 
+    /* ---------- Навигация по меню ---------- */
     function updateMenuSelection() {
         menuLinks.forEach((link, index) => {
-            if (index === currentIndex) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
+            link.classList.toggle('active', index === currentIndex);
         });
     }
 
@@ -234,6 +380,14 @@
     });
 
     window.addEventListener('keydown', (e) => {
+        // В режиме памяти стрелки/Enter не должны дёргать скрытое меню
+        if (document.body.classList.contains('memory-mode')) {
+            if (e.key === 'Escape' && imgWin.style.display === 'block') {
+                closeImage();
+            }
+            return;
+        }
+
         if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
             e.preventDefault();
             currentIndex = (currentIndex - 1 + menuLinks.length) % menuLinks.length;
@@ -250,16 +404,56 @@
 
     updateMenuSelection();
 
+    /* ---------- Переход в "память" ---------- */
     revealLink.addEventListener('click', (e) => {
         e.preventDefault();
+        document.body.classList.add('memory-mode');
+        // даём отрисоваться и фокусируем кнопку для Enter
+        requestAnimationFrame(() => revealBtn.focus());
+    });
+
+    /* ---------- Кнопка REVEAL MEMORY ---------- */
+    revealBtn.addEventListener('click', () => {
+        document.body.classList.add('revealed');
         imgWin.style.display = 'block';
         imgWin.style.zIndex = highestZIndex() + 1;
+
+        // музыка
+        if (bgm.paused) {
+            bgm.volume = 0;
+            const playPromise = bgm.play();
+            if (playPromise !== undefined) {
+                playPromise.then(fadeInMusic).catch(() => {});
+            } else {
+                fadeInMusic();
+            }
+        }
     });
 
-    closeImgBtn.addEventListener('click', () => {
+    function fadeInMusic() {
+        const target = 0.7;
+        let vol = 0;
+        clearInterval(fadeInMusic._timer);
+        fadeInMusic._timer = setInterval(() => {
+            vol += 0.03;
+            if (vol >= target) {
+                vol = target;
+                clearInterval(fadeInMusic._timer);
+            }
+            bgm.volume = vol;
+        }, 90);
+    }
+
+    /* ---------- Закрытие окна с постером ---------- */
+    function closeImage() {
         imgWin.style.display = 'none';
-    });
+        document.body.classList.remove('revealed');
+        revealBtn.focus();
+    }
 
+    closeImgBtn.addEventListener('click', closeImage);
+
+    /* ---------- Z-index и перетаскивание ---------- */
     function highestZIndex() {
         return Math.max(
             ...Array.from(document.querySelectorAll('.terminal-window, .image-window'))
