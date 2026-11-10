@@ -163,15 +163,6 @@
             object-fit: cover;
         }
 
-        .image-footer {
-            padding: 16px 24px;
-            border-top: 2px solid #312121;
-        }
-
-        .image-footer .links {
-            margin-top: 0;
-        }
-
         #vignette {
             position: fixed;
             inset: 0;
@@ -247,6 +238,7 @@
     <div class="links">
         <ul>
             <li><a href="#" id="revealBtn" class="active">REVEAL MEMORY</a></li>
+            <li><a href="#" id="discardBtn">Discard.</a></li>
         </ul>
     </div>
 </div>
@@ -263,13 +255,6 @@
     </div>
     <div class="image-container">
         <img src="vhs3.png" alt="lost signal" class="crt-image">
-    </div>
-    <div class="image-footer">
-        <div class="links">
-            <ul>
-                <li><a href="#" id="discardBtn">Discard.</a></li>
-            </ul>
-        </div>
     </div>
 </div>
 
@@ -355,6 +340,16 @@
         }
     });
 
+    discardBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.body.classList.remove('memory-mode');
+        document.body.classList.remove('revealed');
+        imgWin.style.display = 'none';
+        revealBtn.classList.add('active');
+        discardBtn.classList.remove('active');
+        updateMenuSelection();
+    });
+
     function closeImage() {
         imgWin.style.display = 'none';
         document.body.classList.remove('revealed');
@@ -362,10 +357,6 @@
     }
 
     closeImgBtn.addEventListener('click', closeImage);
-    discardBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        closeImage();
-    });
 
     function highestZIndex() {
         return Math.max(
