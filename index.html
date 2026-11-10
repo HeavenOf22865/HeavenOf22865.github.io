@@ -284,6 +284,7 @@
 
     function playSelectSound() {
         sfxSelect.currentTime = 0;
+        sfxSelect.volume = 0.5;
         sfxSelect.play().catch(() => {});
     }
 
